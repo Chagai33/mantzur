@@ -3,44 +3,17 @@ import Header from './components/Header'
 import ImageGallery from './components/ImageGallery'
 import Lightbox from './components/Lightbox'
 import { loadImages } from './utils/imageLoader'
+import './App.css'
 
 function App() {
   const [images, setImages] = useState([])
-  const [imageTexts, setImageTexts] = useState({})
   const [isLightboxOpen, setIsLightboxOpen] = useState(false)
   const [currentImageSlot, setCurrentImageSlot] = useState(null)
+  const [isFullscreen, setIsFullscreen] = useState(false)
 
   useEffect(() => {
     const loadedImages = loadImages()
     setImages(loadedImages)
-    
-    // טעינת בחירות קודמות מ-localStorage
-    const savedSelections = localStorage.getItem('imageSelections')
-    if (savedSelections) {
-      try {
-        const selections = JSON.parse(savedSelections)
-        // עדכון התמונות לפי הבחירות השמורות
-        const updatedImages = loadedImages.map((img, idx) => {
-          if (selections[idx] !== undefined) {
-            return loadedImages[selections[idx]]
-          }
-          return img
-        })
-        setImages(updatedImages)
-      } catch (e) {
-        console.error('Error loading saved selections:', e)
-      }
-    }
-    
-    // טעינת טקסטים שמורים
-    const savedTexts = localStorage.getItem('imageTexts')
-    if (savedTexts) {
-      try {
-        setImageTexts(JSON.parse(savedTexts))
-      } catch (e) {
-        console.error('Error loading saved texts:', e)
-      }
-    }
   }, [])
 
   const handleImageClick = (slotIndex) => {
@@ -54,11 +27,6 @@ function App() {
       const newImages = [...images]
       newImages[currentImageSlot] = allImages[selectedIndex]
       setImages(newImages)
-      
-      // שמירת הבחירה ב-localStorage
-      const savedSelections = JSON.parse(localStorage.getItem('imageSelections') || '{}')
-      savedSelections[currentImageSlot] = selectedIndex
-      localStorage.setItem('imageSelections', JSON.stringify(savedSelections))
     }
     setIsLightboxOpen(false)
     setCurrentImageSlot(null)
@@ -69,18 +37,45 @@ function App() {
     setCurrentImageSlot(null)
   }
 
+  const toggleFullscreen = async () => {
+    try {
+      if (!document.fullscreenElement) {
+        await document.documentElement.requestFullscreen()
+        setIsFullscreen(true)
+      } else {
+        await document.exitFullscreen()
+        setIsFullscreen(false)
+      }
+    } catch (error) {
+      console.error('Error toggling fullscreen:', error)
+    }
+  }
+
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      setIsFullscreen(!!document.fullscreenElement)
+    }
+
+    document.addEventListener('fullscreenchange', handleFullscreenChange)
+    return () => {
+      document.removeEventListener('fullscreenchange', handleFullscreenChange)
+    }
+  }, [])
+
   return (
     <div className="app">
+      <button 
+        className="fullscreen-toggle"
+        onClick={toggleFullscreen}
+        aria-label={isFullscreen ? 'יציאה ממסך מלא' : 'מסך מלא'}
+        title={isFullscreen ? 'יציאה ממסך מלא' : 'מסך מלא'}
+      >
+        {isFullscreen ? '🔍' : '📺'}
+      </button>
       <Header />
       <ImageGallery 
         images={images}
-        imageTexts={imageTexts}
         onImageClick={handleImageClick}
-        onTextChange={(index, text) => {
-          const newTexts = { ...imageTexts, [index]: text }
-          setImageTexts(newTexts)
-          localStorage.setItem('imageTexts', JSON.stringify(newTexts))
-        }}
       />
       {isLightboxOpen && (
         <Lightbox

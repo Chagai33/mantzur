@@ -4,6 +4,16 @@
   box-sizing: border-box;
 }
 
+/* Local fonts - Add @font-face declarations here when fonts are available */
+/* Example:
+@font-face {
+  font-family: 'HebrewSerif';
+  src: url('/fonts/HebrewSerif-Regular.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+*/
+
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   direction: rtl;
@@ -11,6 +21,7 @@ body {
   height: 100vh;
   color: #f8eacd;
   overflow: hidden;
+  cursor: none; /* הסתרת סמן העכבר לתצוגת קיוסק */
 }
 
 #root {

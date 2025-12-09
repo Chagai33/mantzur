@@ -1,5 +1,13 @@
 /* src/components/Header.css */
-@import url('https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@700&display=swap');
+/* Note: For local fonts, add @font-face declarations in src/index.css */
+/* Example for Frank Ruhl Libre:
+@font-face {
+  font-family: 'Frank Ruhl Libre';
+  src: url('/fonts/FrankRuhlLibre-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+}
+*/
 
 .header {
   text-align: center;
