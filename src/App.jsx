@@ -119,15 +119,29 @@ function App() {
   }, [])
 
   return (
-    <div className="app">
-      <button 
-        className="fullscreen-toggle"
-        onClick={toggleFullscreen}
-        aria-label={isFullscreen ? 'יציאה ממסך מלא' : 'מסך מלא'}
-        title={isFullscreen ? 'יציאה ממסך מלא' : 'מסך מלא'}
-      >
-        {isFullscreen ? '🔍' : '📺'}
-      </button>
+    <>
+      <div className="mobile-warning">
+        <div className="mobile-warning-content">
+          <h1>בליבנו לעד!</h1>
+          <p>אתר זה מותאם לתצוגה על מסך מחשב או טלוויזיה בלבד.</p>
+          <p>נא לפתוח במסך רחב.</p>
+        </div>
+        <div className="mobile-warning-footer">
+          <small>
+            פיתוח: <a href="https://www.linkedin.com/in/chagai-yechiel/" target="_blank" rel="noopener noreferrer">חגי יחיאל</a>
+          </small>
+        </div>
+      </div>
+
+      <div className="app">
+        <button 
+          className="fullscreen-toggle"
+          onClick={toggleFullscreen}
+          aria-label={isFullscreen ? 'יציאה ממסך מלא' : 'מסך מלא'}
+          title={isFullscreen ? 'יציאה ממסך מלא' : 'מסך מלא'}
+        >
+          {isFullscreen ? '🔍' : '📺'}
+        </button>
       <Header />
       <ImageGallery 
         images={images}
@@ -151,7 +165,8 @@ function App() {
           onClose={handleCloseLightbox}
         />
       )}
-    </div>
+      </div>
+    </>
   )
 }
 

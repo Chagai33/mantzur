@@ -102,3 +102,83 @@
   }
 }
 
+/* Mobile Warning Styles */
+.mobile-warning {
+  display: none; /* Hidden by default on Desktop */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, var(--color-primary-blue), var(--color-secondary-blue));
+  z-index: 9999;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 20px;
+}
+
+.mobile-warning-content {
+  border: 2px solid var(--color-gold-metallic);
+  padding: 2rem;
+  border-radius: 15px;
+  background: rgba(10, 31, 61, 0.9);
+  box-shadow: var(--shadow-metallic);
+}
+
+.mobile-warning h1 {
+  font-family: 'Assistant', sans-serif;
+  color: var(--color-gold-metallic);
+  margin-bottom: 1rem;
+}
+
+.mobile-warning p {
+  font-family: 'Assistant', sans-serif;
+  color: var(--color-text-light);
+  font-size: 1.2rem;
+}
+
+.mobile-warning-footer {
+  position: absolute;
+  bottom: 20px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  padding: 0 20px;
+}
+
+.mobile-warning-footer small {
+  font-family: 'Assistant', sans-serif;
+  color: rgba(248, 234, 205, 0.6);
+  font-size: 0.9rem;
+}
+
+.mobile-warning-footer a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.mobile-warning-footer a:hover {
+  text-decoration: underline;
+  color: var(--color-gold-light);
+}
+
+/* MEDIA QUERY: If screen width is less than 1024px (Tablets/Mobile) */
+@media (max-width: 1024px) {
+  /* Show the warning */
+  .mobile-warning {
+    display: flex !important;
+  }
+
+  /* Hide the actual app to prevent broken layout */
+  .app {
+    display: none !important;
+  }
+  
+  /* Also hide any floating candles if they are outside .app */
+  .corner-candle {
+    display: none !important;
+  }
+}
+
