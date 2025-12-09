@@ -3,7 +3,9 @@ import './Header.css'
 function Header() {
   return (
     <header className="header">
-      <h1 className="header-title">בליבנו לעד</h1>
+      <div className="header-scroll">
+        <h1 className="header-title">בליבנו לעד</h1>
+      </div>
     </header>
   )
 }
