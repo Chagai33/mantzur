@@ -3,56 +3,57 @@
 .gallery-container {
   display: flex;
   flex-direction: column;
-  /* תופס את כל הגובה והרוחב הזמינים */
-  width: 98vw; 
-  height: 85vh; /* משאיר מקום לכותרת */
-  margin: 0 auto;
-  padding: 0 1vw;
-  box-sizing: border-box;
-  overflow: hidden; /* מונע סקרול */
-  gap: 1vh; /* רווח אנכי קטן בין השורות */
+  /* תופס את כל רוחב המסך ומבטל שוליים מיותרים */
+  width: 100vw; 
+  height: 85vh; /* 85% מגובה המסך לתמונות */
+  margin: 0;
+  padding: 0;
+  overflow: hidden; /* מונע גלילה */
+  gap: 1vh; 
 }
 
 .gallery-row {
   display: flex;
   width: 100%;
-  /* זה הסוד: מפזר את התמונות לכל הרוחב במקום להצמיד לאמצע */
+  /* זה התיקון הקריטי: מפזר את התמונות לכל רוחב המסך */
   justify-content: space-evenly; 
   align-items: center;
+  /* מבטל גאפ קבוע כדי לתת ל-justify לעבוד */
+  gap: 0; 
 }
 
-/* הגדרות לשורות עם 3 תמונות (עליונה ותחתונה) */
+/* שורות עם 3 תמונות (למעלה ולמטה) */
 .row-small {
-  flex: 3; /* יחס גובה */
-  max-height: 30%; /* מגבלה שלא יחרגו */
+  /* גובה באחוזים מהמסך הפנוי */
+  height: 30%; 
+  padding: 0 2vw; /* שוליים קטנים בצדדים הקיצוניים */
 }
 
-/* הגדרות לשורה האמצעית (2 תמונות) */
+/* שורה אמצעית עם 2 תמונות */
 .row-large {
-  flex: 4; /* נותן להן יותר גובה */
-  max-height: 35%;
-  padding: 0 10%; /* דוחף אותן קצת פנימה שלא יהיו רחוקות מדי */
+  height: 36%; /* נותן להן יותר גובה ונוכחות */
+  padding: 0 10vw; /* דוחף אותן קצת פנימה שלא יהיו רחוקות מדי זו מזו */
 }
 
 .gallery-item-wrapper {
-  /* הטריק המקצועי: */
-  /* הגובה הוא המקסימום האפשרי בתוך השורה */
+  /* הגובה קובע את הגודל, הרוחב יסתדר לבד */
   height: 100%; 
-  /* הרוחב נקבע אוטומטית לפי היחס, אבל לא עולה על רוחב הגיוני */
-  width: auto;
-  aspect-ratio: 3 / 4; /* יחס תמונה קלאסי */
+  width: auto; 
+  /* יחס גובה-רוחב קבוע - שומר שלא יהיו צרות מדי */
+  aspect-ratio: 3 / 4; 
   
   display: flex;
   flex-direction: column;
   position: relative;
+  align-items: center;
   transition: transform 0.3s ease;
 }
 
 .gallery-item {
-  flex: 1;
   width: 100%;
   height: 100%;
   display: flex;
+  justify-content: center;
   cursor: pointer;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
@@ -62,15 +63,19 @@
 }
 
 .image-frame {
-  width: 100%;
   height: 100%;
-  border: 3px solid #d4af37; /* מסגרת זהב */
-  border-radius: 10px;
+  width: auto;
+  aspect-ratio: 3 / 4; 
+  
+  border: 3px solid #d4af37; /* זהב */
+  border-radius: 12px;
   padding: 4px;
   background: rgba(255, 255, 255, 0.15);
-  box-shadow: 0 8px 16px rgba(0,0,0,0.4); /* הצללה עמוקה יותר */
+  /* הצללה חזקה יותר להבלטה מהרקע הכחול */
+  box-shadow: 0 10px 20px rgba(0,0,0,0.4); 
   box-sizing: border-box;
   transition: all 0.3s ease;
+  overflow: hidden;
 }
 
 .gallery-item:hover .image-frame {
@@ -83,18 +88,17 @@
   width: 100%;
   height: 100%;
   overflow: hidden;
-  border-radius: 6px;
-  background-color: #000; /* רקע שחור למקרה שהתמונה לא נטענת */
+  border-radius: 8px;
   position: relative;
 }
 
 .image-wrapper img {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* חיתוך חכם */
-  object-position: top center; /* מתמקד בפנים (בדרך כלל למעלה) */
+  object-fit: cover;
   display: block;
   transition: transform 0.3s ease;
+  object-position: center;
 }
 
 .gallery-item:hover .image-wrapper img {
@@ -114,7 +118,7 @@
   justify-content: center;
   opacity: 0;
   transition: opacity 0.3s ease;
-  border-radius: 6px;
+  border-radius: 8px;
 }
 
 .gallery-item:hover .image-overlay {
@@ -130,58 +134,67 @@
   border-radius: 4px;
 }
 
-/* אזור הטקסט */
+/* טקסט */
 .image-text-container {
   position: absolute;
-  bottom: -35px; /* מציב את הטקסט מתחת לתמונה */
-  left: 0;
-  width: 100%;
-  height: 30px;
-  z-index: 2;
+  /* ממקם את הטקסט בתוך המסגרת בחלק התחתון, או קצת מתחת */
+  bottom: -5px; 
+  width: 110%; /* קצת יותר רחב מהתמונה */
+  z-index: 10;
+  display: flex;
+  justify-content: center;
 }
 
 .image-text {
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.6); /* כהה יותר לקריאות */
+  background: linear-gradient(to right, rgba(0,0,0,0.8), rgba(0,0,0,0.6));
   border: 1px solid #d4af37;
-  border-radius: 4px;
+  border-radius: 20px; /* פינות עגולות יותר */
   color: #fff;
-  font-size: clamp(0.8rem, 1.2vw, 1.1rem);
+  font-size: clamp(0.9rem, 1.8vh, 1.2rem); /* טקסט גדול וקריא יותר בטלוויזיה */
+  padding: 4px 15px;
   text-align: center;
   font-family: 'Assistant', sans-serif;
-  padding: 2px;
-  white-space: nowrap; /* מונע שבירת שורה */
-  overflow: hidden;
-  text-overflow: ellipsis;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+  width: auto;
+  min-width: 80%;
+  outline: none;
   resize: none;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
   direction: rtl;
   transition: all 0.3s ease;
   box-sizing: border-box;
 }
 
 .image-text:focus {
-  outline: none;
   border-color: #1853a1;
   background: rgba(24, 83, 161, 0.15);
   box-shadow: 0 0 10px rgba(24, 83, 161, 0.3);
 }
 
 .image-text::placeholder {
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.7);
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
   .gallery-container {
-    width: 100vw;
+    width: 100%;
     height: 90vh;
-    padding: 0 2vw;
   }
   
   .gallery-row {
     flex-wrap: wrap;
     gap: 10px;
+  }
+  
+  .row-small {
+    padding: 0 1vw;
+  }
+  
+  .row-large {
+    padding: 0 5vw;
   }
   
   .row-small .gallery-item-wrapper,
@@ -194,10 +207,6 @@
   .row-large .gallery-item-wrapper {
     width: calc((100% - 10px) / 2);
     min-width: 150px;
-  }
-  
-  .row-large {
-    padding: 0 5%;
   }
 }
 
@@ -218,6 +227,6 @@
     position: relative;
     bottom: 0;
     margin-top: 5px;
-    height: 40px;
+    width: 100%;
   }
 }
