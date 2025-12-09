@@ -3,6 +3,7 @@ import Header from './components/Header'
 import ImageGallery from './components/ImageGallery'
 import Lightbox from './components/Lightbox'
 import { loadImages } from './utils/imageLoader'
+import candleGif from './assets/candle-corner.gif'
 import './App.css'
 
 function App() {
@@ -137,6 +138,9 @@ function App() {
           פיתוח: <a href="https://www.linkedin.com/in/chagai-yechiel/" target="_blank" rel="noopener noreferrer">חגי יחיאל</a>
         </small>
       </footer>
+      {/* Corner Candles */}
+      <img src={candleGif} alt="נר זיכרון" className="corner-candle candle-left" />
+      <img src={candleGif} alt="נר זיכרון" className="corner-candle candle-right" />
       {isLightboxOpen && (
         <Lightbox
           images={loadImages()}
