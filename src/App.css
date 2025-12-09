@@ -64,31 +64,39 @@
 
 /* Corner Candles */
 .corner-candle {
-  position: fixed; /* Take out of normal flow */
-  bottom: 0;
-  width: 150px; /* Adjust size as needed */
-  height: auto;
-  z-index: 1; /* Behind the main content (gallery is z-index 10) */
-  opacity: 0.8; /* Make it slightly subtle */
-  pointer-events: none; /* Prevent clicking */
+  position: fixed;
+  /* Center vertically */
+  top: 50%;
+  bottom: auto; /* Reset bottom */
   
-  /* THE KEY TO COLOR BLENDING: */
-  /* This makes the black background of the GIF transparent, keeping only the light */
-  mix-blend-mode: screen; 
+  /* Height adjustment - keep it large enough */
+  height: 40vh; 
+  width: auto;
+  
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.8;
+  mix-blend-mode: screen;
+  
+  /* CRITICAL: This crops the bottom 25px to hide the watermark text */
+  clip-path: inset(0 0 25px 0); 
 }
 
+/* Update positioning for specific sides */
 .candle-left {
-  left: 0;
-  /* Optional: flip one candle for symmetry */
-  /* transform: scaleX(-1); */ 
+  left: -1vw; /* Adjust slightly if needed */
+  /* Center vertically */
+  transform: translateY(-50%);
 }
 
 .candle-right {
-  right: 0;
+  right: -1vw;
+  /* Center vertically AND flip horizontally */
+  transform: translateY(-50%) scaleX(-1);
 }
 
-/* Only show on wide screens where there is empty space */
-@media (max-width: 1024px) {
+/* Responsive: Hide on smaller screens */
+@media (max-width: 1400px) {
   .corner-candle {
     display: none;
   }

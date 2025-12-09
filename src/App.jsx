@@ -138,9 +138,9 @@ function App() {
           פיתוח: <a href="https://www.linkedin.com/in/chagai-yechiel/" target="_blank" rel="noopener noreferrer">חגי יחיאל</a>
         </small>
       </footer>
-      {/* Corner Candles */}
-      <img src={candleGif} alt="נר זיכרון" className="corner-candle candle-left" />
-      <img src={candleGif} alt="נר זיכרון" className="corner-candle candle-right" />
+      {/* Candles fixed to the sides */}
+      <img src={candleGif} alt="" className="corner-candle candle-left" />
+      <img src={candleGif} alt="" className="corner-candle candle-right" />
       {isLightboxOpen && (
         <Lightbox
           images={loadImages()}
