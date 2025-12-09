@@ -26,26 +26,6 @@ body {
   overflow: hidden;
 }
 
-.candles-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 0.5rem auto;
-  padding: 0 2rem;
-  max-width: 1800px;
-  width: 100%;
-  gap: 2rem;
-  flex-shrink: 0;
-}
-
-@media (max-width: 768px) {
-  .candles-container {
-    padding: 0 1rem;
-    gap: 1rem;
-    margin: 0.5rem auto 1.5rem auto;
-  }
-}
-
 img {
   max-width: 100%;
   height: auto;

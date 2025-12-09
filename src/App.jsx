@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
 import Header from './components/Header'
-import Candle from './components/Candle'
 import ImageGallery from './components/ImageGallery'
 import Lightbox from './components/Lightbox'
 import { loadImages } from './utils/imageLoader'
@@ -73,10 +72,6 @@ function App() {
   return (
     <div className="app">
       <Header />
-      <div className="candles-container">
-        <Candle />
-        <Candle />
-      </div>
       <ImageGallery 
         images={images}
         imageTexts={imageTexts}
