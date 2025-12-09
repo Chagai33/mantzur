@@ -1,0 +1,54 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  direction: rtl;
+  background: linear-gradient(to left, #159ee2 0%, #1853a1 100%);
+  height: 100vh;
+  color: #f8eacd;
+  overflow: hidden;
+}
+
+#root {
+  width: 100%;
+  height: 100vh;
+}
+
+.app {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.candles-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0.5rem auto;
+  padding: 0 2rem;
+  max-width: 1800px;
+  width: 100%;
+  gap: 2rem;
+  flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  .candles-container {
+    padding: 0 1rem;
+    gap: 1rem;
+    margin: 0.5rem auto 1.5rem auto;
+  }
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
