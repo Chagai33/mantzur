@@ -48,7 +48,7 @@ function Lightbox({ images, currentIndex, onSelect, onClose }) {
               onClick={() => handleImageClick(index)}
             >
               <div className="lightbox-image-wrapper">
-                <img src={image} alt={`תמונה ${index + 1}`} />
+                <img src={image.src} alt={`תמונה ${index + 1}`} />
                 {selectedIndex === index && (
                   <div className="selected-indicator">✓</div>
                 )}

@@ -5,7 +5,8 @@
   flex-direction: column;
   /* תופס את כל רוחב המסך ומבטל שוליים מיותרים */
   width: 100vw; 
-  height: 85vh; /* 85% מגובה המסך לתמונות */
+  flex: 1; /* Grow to fill available space */
+  min-height: 0; /* Crucial for flexbox scrolling issues */
   margin: 0;
   padding: 0;
   overflow: hidden; /* מונע גלילה */
@@ -39,7 +40,8 @@
 @media (max-width: 768px) {
   .gallery-container {
     width: 100%;
-    height: 90vh;
+    flex: 1; /* Keep flex behavior on mobile too */
+    min-height: 0;
   }
   
   .gallery-row {

@@ -13,7 +13,50 @@ function App() {
 
   useEffect(() => {
     const loadedImages = loadImages()
-    setImages(loadedImages)
+    
+    // Initialize sorted array of size 8 with nulls
+    const sortedImages = new Array(8).fill(null)
+    const extras = []
+    
+    // Sort images based on filename prefix numbers
+    loadedImages.forEach((imageObj) => {
+      try {
+        // Use the filename from the object
+        const decodedFilename = decodeURIComponent(imageObj.filename)
+        
+        // Check if filename starts with a number
+        const numberMatch = decodedFilename.match(/^(\d+)/)
+        
+        if (numberMatch) {
+          const slotNumber = parseInt(numberMatch[1], 10)
+          const slotIndex = slotNumber - 1 // Convert to 0-based index
+          
+          // Place in sorted array if index is valid
+          if (slotIndex >= 0 && slotIndex < 8) {
+            sortedImages[slotIndex] = imageObj
+          } else {
+            extras.push(imageObj)
+          }
+        } else {
+          // No number prefix, add to extras
+          extras.push(imageObj)
+        }
+      } catch (e) {
+        // If parsing fails, add to extras
+        extras.push(imageObj)
+      }
+    })
+    
+    // Fill gaps with extras
+    let extraIndex = 0
+    for (let i = 0; i < sortedImages.length; i++) {
+      if (sortedImages[i] === null && extraIndex < extras.length) {
+        sortedImages[i] = extras[extraIndex]
+        extraIndex++
+      }
+    }
+    
+    setImages(sortedImages)
   }, [])
 
   const handleImageClick = (slotIndex) => {
@@ -53,10 +96,22 @@ function App() {
 
   useEffect(() => {
     const handleFullscreenChange = () => {
-      setIsFullscreen(!!document.fullscreenElement)
+      const isFull = !!document.fullscreenElement
+      setIsFullscreen(isFull)
+      
+      // Toggle cursor visibility based on fullscreen state
+      if (isFull) {
+        document.body.classList.add('is-fullscreen')
+      } else {
+        document.body.classList.remove('is-fullscreen')
+      }
     }
 
     document.addEventListener('fullscreenchange', handleFullscreenChange)
+    
+    // Set initial state
+    handleFullscreenChange()
+    
     return () => {
       document.removeEventListener('fullscreenchange', handleFullscreenChange)
     }
@@ -77,11 +132,16 @@ function App() {
         images={images}
         onImageClick={handleImageClick}
       />
+      <footer className="app-footer">
+        <small>
+          פיתוח: <a href="https://www.linkedin.com/in/chagai-yechiel/" target="_blank" rel="noopener noreferrer">חגי יחיאל</a>
+        </small>
+      </footer>
       {isLightboxOpen && (
         <Lightbox
           images={loadImages()}
           currentIndex={currentImageSlot !== null && images[currentImageSlot] 
-            ? loadImages().findIndex(img => img === images[currentImageSlot]) 
+            ? loadImages().findIndex(img => img.src === images[currentImageSlot]?.src) 
             : 0}
           onSelect={handleImageSelect}
           onClose={handleCloseLightbox}

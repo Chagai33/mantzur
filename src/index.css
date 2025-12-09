@@ -4,6 +4,17 @@
   box-sizing: border-box;
 }
 
+/* Modern Color Palette - Regal Blue & Gold */
+:root {
+  --color-primary-blue: #0a1f3d; /* Deep Royal Blue - for main backgrounds */
+  --color-secondary-blue: #1a3c75; /* Lighter blue - for gradients/accents */
+  --color-gold-metallic: #d4af37; /* Metallic Gold - for frames and borders */
+  --color-gold-light: #f4e4bc; /* Light Gold/Cream - for text highlights or subtle backgrounds */
+  --color-text-light: #f8f9fa; /* Off-white - for main text readability */
+  --shadow-soft: 0 10px 30px -5px rgba(0, 0, 0, 0.3); /* Modern, soft depth */
+  --shadow-metallic: 0 4px 6px rgba(212, 175, 55, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.2); /* For gold elements */
+}
+
 /* Local fonts - Add @font-face declarations here when fonts are available */
 /* Example:
 @font-face {
@@ -15,13 +26,17 @@
 */
 
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Assistant', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   direction: rtl;
-  background: linear-gradient(to left, #159ee2 0%, #1853a1 100%);
+  background: linear-gradient(to bottom, var(--color-primary-blue), var(--color-secondary-blue));
   height: 100vh;
-  color: #f8eacd;
+  color: var(--color-text-light);
   overflow: hidden;
-  cursor: none; /* הסתרת סמן העכבר לתצוגת קיוסק */
+}
+
+/* Hide cursor only in fullscreen mode */
+body.is-fullscreen {
+  cursor: none;
 }
 
 #root {

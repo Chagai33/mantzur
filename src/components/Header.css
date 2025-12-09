@@ -19,47 +19,39 @@
   align-items: center; /* מיישר לאמצע הגובה */
   padding-top: 1vh;
   z-index: 10;
-  background-color: #1853a1;
+  background: transparent;
+  flex-shrink: 0; /* Prevent header from shrinking */
 }
 
 .header-scroll {
-  background: linear-gradient(to bottom, #fdfbf7 0%, #f4e4bc 50%, #fdfbf7 100%);
-  /* פדינג קטן יותר */
-  padding: 0.2rem 4rem; 
-  border-radius: 4px;
+  /* Modern pearl/cream gradient - clean and subtle */
+  background: linear-gradient(to bottom, rgba(248, 244, 235, 0.95), rgba(244, 228, 188, 0.98), rgba(248, 244, 235, 0.95));
+  padding: 0.3rem 4rem; 
+  border-radius: 8px;
   position: relative;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-  border-top: 2px solid #e0c080;
-  border-bottom: 2px solid #e0c080;
+  /* Clean gold border with subtle glow */
+  border: 2px solid var(--color-gold-metallic);
+  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3), 0 0 20px rgba(212, 175, 55, 0.1);
   display: flex;
   align-items: center;
+  backdrop-filter: blur(10px);
 }
 
 .header-scroll::before,
 .header-scroll::after {
-  content: '';
-  position: absolute;
-  top: -6px;
-  bottom: -6px;
-  width: 20px;
-  background: linear-gradient(to right, #8b5a2b, #d4a060, #8b5a2b);
-  border-radius: 4px;
-  box-shadow: 2px 2px 4px rgba(0,0,0,0.4);
+  display: none; /* Remove old scroll handles for modern look */
 }
 
-.header-scroll::before { left: -10px; }
-.header-scroll::after { right: -10px; }
-
 .header-title {
-  font-family: 'Frank Ruhl Libre', serif;
+  font-family: 'Assistant', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   /* פונט שמתאים את עצמו לגובה הצר יותר */
   font-size: clamp(1.8rem, 5vh, 3rem); 
-  font-weight: 700;
-  color: #1a3c75;
+  font-weight: 600;
+  color: var(--color-primary-blue);
   margin: 0;
-  text-shadow: 1px 1px 0px rgba(255, 255, 255, 0.5);
-  letter-spacing: 1px;
-  line-height: 1;
+  text-shadow: 0 1px 2px rgba(212, 175, 55, 0.3), 0 0 10px rgba(212, 175, 55, 0.1);
+  letter-spacing: 2px;
+  line-height: 1.2;
 }
 
 @media (max-width: 768px) {

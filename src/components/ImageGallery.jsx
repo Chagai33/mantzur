@@ -7,18 +7,25 @@ function ImageGallery({ images, onImageClick }) {
   const row2 = images.slice(3, 5) // 2 תמונות גדולות
   const row3 = images.slice(5, 8) // 3 תמונות אחרונות
 
-  // Extract display name from image path
-  const getDisplayName = (imagePath) => {
+  // Extract display name from filename
+  const getDisplayName = (filename) => {
+    if (!filename) return 'תמונה'
+    
     try {
-      // Get filename from path (e.g., "/Pic/Grandma Sarah.jpg" -> "Grandma Sarah.jpg")
-      const filename = imagePath.split('/').pop()
-      // Remove file extension (e.g., "Grandma Sarah.jpg" -> "Grandma Sarah")
-      const nameWithoutExt = filename.replace(/\.[^/.]+$/, '')
+      // Remove file extension
+      let nameWithoutExt = filename.replace(/\.[^/.]+$/, '')
       // Decode URI to handle Hebrew characters
-      return decodeURIComponent(nameWithoutExt)
+      nameWithoutExt = decodeURIComponent(nameWithoutExt)
+      // Remove leading number and separator (underscore/hyphen/space)
+      // This ensures "1_Grandma" becomes "Grandma"
+      nameWithoutExt = nameWithoutExt.replace(/^[\d\s\-_]+/, '')
+      // Replace remaining underscores/hyphens with spaces
+      nameWithoutExt = nameWithoutExt.replace(/[-_]/g, ' ')
+      // Trim whitespace
+      return nameWithoutExt.trim() || 'תמונה'
     } catch (e) {
       // Fallback to image number if parsing fails
-      return `תמונה ${imagePath}`
+      return 'תמונה'
     }
   }
 
@@ -27,42 +34,48 @@ function ImageGallery({ images, onImageClick }) {
       {/* שורה ראשונה - 3 תמונות קטנות */}
       <div className="gallery-row row-small">
         {row1.map((img, idx) => (
-          <GalleryItem
-            key={idx}
-            imagePath={img}
-            displayName={getDisplayName(img)}
-            index={idx}
-            isLarge={false}
-            onClick={() => onImageClick(idx)}
-          />
+          img && (
+            <GalleryItem
+              key={idx}
+              imagePath={img.src}
+              displayName={getDisplayName(img.filename)}
+              index={idx}
+              isLarge={false}
+              onClick={() => onImageClick(idx)}
+            />
+          )
         ))}
       </div>
 
       {/* שורה שנייה - 2 תמונות גדולות */}
       <div className="gallery-row row-large">
         {row2.map((img, idx) => (
-          <GalleryItem
-            key={idx + 3}
-            imagePath={img}
-            displayName={getDisplayName(img)}
-            index={idx + 3}
-            isLarge={true}
-            onClick={() => onImageClick(idx + 3)}
-          />
+          img && (
+            <GalleryItem
+              key={idx + 3}
+              imagePath={img.src}
+              displayName={getDisplayName(img.filename)}
+              index={idx + 3}
+              isLarge={true}
+              onClick={() => onImageClick(idx + 3)}
+            />
+          )
         ))}
       </div>
 
       {/* שורה תחתונה - 3 תמונות קטנות */}
       <div className="gallery-row row-small">
         {row3.map((img, idx) => (
-          <GalleryItem
-            key={idx + 5}
-            imagePath={img}
-            displayName={getDisplayName(img)}
-            index={idx + 5}
-            isLarge={false}
-            onClick={() => onImageClick(idx + 5)}
-          />
+          img && (
+            <GalleryItem
+              key={idx + 5}
+              imagePath={img.src}
+              displayName={getDisplayName(img.filename)}
+              index={idx + 5}
+              isLarge={false}
+              onClick={() => onImageClick(idx + 5)}
+            />
+          )
         ))}
       </div>
     </div>
