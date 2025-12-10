@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="he">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>בליבנו לעד!</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(to bottom, #f5e6d3, #e8d4b8);
+            padding: 12px;
+            text-align: center;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+            border: 3px solid #d4af37;
+        }
+        
+        .header h1 {
+            font-size: 42px;
+            color: #2c1810;
+            margin: 0;
+            text-shadow: 2px 2px 4px rgba(212, 175, 55, 0.3);
+        }
+        
+        .container {
+            flex: 1;
+            display: flex;
+            padding: 10px;
+            gap: 15px;
+            max-height: calc(100vh - 100px);
+        }
+        
+        .side-animation {
+            width: 90px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .candle {
+            width: 80px;
+            height: 200px;
+            background: linear-gradient(to bottom, #f5f5dc 0%, #e8e8c8 100%);
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding-top: 10px;
+            border: 2px solid #d4af37;
+            position: relative;
+        }
+        
+        .flame {
+            width: 20px;
+            height: 35px;
+            background: linear-gradient(to top, #ff6b00 0%, #ffd700 50%, #fff 100%);
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            box-shadow: 0 0 20px #ff6b00, 0 0 30px #ffd700;
+            animation: flicker 2s infinite;
+        }
+        
+        @keyframes flicker {
+            0%, 100% { transform: scale(1) translateY(0); opacity: 1; }
+            50% { transform: scale(1.1) translateY(-2px); opacity: 0.9; }
+        }
+        
+        .candle-text {
+            margin-top: 15px;
+            font-size: 13px;
+            font-weight: bold;
+            color: #2c1810;
+            text-align: center;
+            line-height: 1.3;
+        }
+        
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            justify-content: space-evenly;
+            padding: 5px 0;
+        }
+        
+        .generation {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            position: relative;
+        }
+        
+        .couple-group {
+            display: flex;
+            gap: 12px;
+            padding: 12px;
+            background: rgba(255,255,255,0.08);
+            border-radius: 12px;
+            border: 2px solid rgba(212, 175, 55, 0.4);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+        
+        .person-box {
+            background: white;
+            border: 3px solid #d4af37;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .person-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .arrow {
+            color: #333;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        
+        .arrow-up, .arrow-down {
+            position: absolute;
+        }
+        
+        .arrow-up {
+            top: 8px;
+        }
+        
+        .arrow-down {
+            bottom: 8px;
+        }
+        
+        .arrow-left, .arrow-right {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        
+        .arrow-left {
+            left: 8px;
+        }
+        
+        .arrow-right {
+            right: 8px;
+        }
+        
+        .label {
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 13px;
+            font-weight: bold;
+            color: white;
+            background: rgba(0,0,0,0.7);
+            padding: 3px 8px;
+            border-radius: 4px;
+            text-align: center;
+            white-space: nowrap;
+        }
+        
+        .connector {
+            font-size: 14px;
+            color: #ffd700;
+            font-weight: bold;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+        }
+        
+        /* יישור הדורות */
+        .grandparents {
+            justify-content: space-between;
+            width: 100%;
+        }
+        
+        .grandparents .person-box {
+            width: 180px;
+            height: 240px;
+        }
+        
+        .parents {
+            justify-content: center;
+        }
+        
+        .parents .person-box {
+            width: 200px;
+            height: 267px;
+        }
+        
+        .children {
+            justify-content: center;
+            gap: 30px;
+        }
+        
+        .children .person-box {
+            width: 170px;
+            height: 227px;
+        }
+        
+        .footer {
+            background: rgba(0,0,0,0.3);
+            color: #ffd700;
+            text-align: center;
+            padding: 8px;
+            font-size: 12px;
+            border-top: 2px solid rgba(212, 175, 55, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>בליבנו לעד!</h1>
+    </div>
+    
+    <div class="container">
+        <div class="side-animation">
+            <div class="candle">
+                <div class="flame"></div>
+                <div class="candle-text">בליבנו<br>לעד!</div>
+            </div>
+        </div>
+        
+        <div class="main-content">
+            <!-- דור הסבים -->
+            <div class="generation grandparents">
+                <div class="couple-group">
+                    <div class="person-box">
+                        <div class="arrow arrow-up">↑</div>
+                        <div class="arrow arrow-left">←</div>
+                        <div class="arrow arrow-right">→</div>
+                        <div class="arrow arrow-down">↓</div>
+                        <div class="label">סבא וסבתא 1<br>(תמונה 1)</div>
+                    </div>
+                    <div class="person-box">
+                        <div class="arrow arrow-up">↑</div>
+                        <div class="arrow arrow-left">←</div>
+                        <div class="arrow arrow-right">→</div>
+                        <div class="arrow arrow-down">↓</div>
+                        <div class="label">סבא וסבתא 1<br>(תמונה 2)</div>
+                    </div>
+                </div>
+                
+                <div class="connector">← strictly sale 3:4 →</div>
+                
+                <div class="couple-group">
+                    <div class="person-box">
+                        <div class="arrow arrow-up">↑</div>
+                        <div class="arrow arrow-left">←</div>
+                        <div class="arrow arrow-right">→</div>
+                        <div class="arrow arrow-down">↓</div>
+                        <div class="label">סבא וסבתא 2<br>(תמונה 1)</div>
+                    </div>
+                    <div class="person-box">
+                        <div class="arrow arrow-up">↑</div>
+                        <div class="arrow arrow-left">←</div>
+                        <div class="arrow arrow-right">→</div>
+                        <div class="arrow arrow-down">↓</div>
+                        <div class="label">סבא וסבתא 2<br>(תמונה 2)</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- דור ההורים -->
+            <div class="generation parents">
+                <div class="couple-group">
+                    <div class="person-box">
+                        <div class="arrow arrow-up">↑</div>
+                        <div class="arrow arrow-left">←</div>
+                        <div class="arrow arrow-right">→</div>
+                        <div class="arrow arrow-down">↓</div>
+                        <div class="label">אבא<br>(תמונה 3:4)</div>
+                    </div>
+                    <div class="person-box">
+                        <div class="arrow arrow-up">↑</div>
+                        <div class="arrow arrow-left">←</div>
+                        <div class="arrow arrow-right">→</div>
+                        <div class="arrow arrow-down">↓</div>
+                        <div class="label">אמא<br>(תמונה 3:4)</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- דור הילדים -->
+            <div class="generation children">
+                <div class="person-box">
+                    <div class="arrow arrow-up">↑</div>
+                    <div class="arrow arrow-left">←</div>
+                    <div class="arrow arrow-right">→</div>
+                    <div class="arrow arrow-down">↓</div>
+                    <div class="label">ילד 1</div>
+                </div>
+                <div class="person-box">
+                    <div class="arrow arrow-up">↑</div>
+                    <div class="arrow arrow-left">←</div>
+                    <div class="arrow arrow-right">→</div>
+                    <div class="arrow arrow-down">↓</div>
+                    <div class="label">ילד 2</div>
+                </div>
+                <div class="person-box">
+                    <div class="arrow arrow-up">↑</div>
+                    <div class="arrow arrow-left">←</div>
+                    <div class="arrow arrow-right">→</div>
+                    <div class="arrow arrow-down">↓</div>
+                    <div class="label">ילד 3</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="side-animation">
+            <div class="candle">
+                <div class="flame"></div>
+                <div class="candle-text">בליבנו<br>לעד!</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="footer">
+        נוצר עם אהבה ● זכרם לברכה
+    </div>
+</body>
+</html>

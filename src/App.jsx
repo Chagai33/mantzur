@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
-import Header from './components/Header'
-import ImageGallery from './components/ImageGallery'
 import Lightbox from './components/Lightbox'
+import PersonBox from './components/PersonBox'
 import { loadImages } from './utils/imageLoader'
 import candleGif from './assets/candle-corner.gif'
 import './App.css'
@@ -15,8 +14,8 @@ function App() {
   useEffect(() => {
     const loadedImages = loadImages()
     
-    // Initialize sorted array of size 8 with nulls
-    const sortedImages = new Array(8).fill(null)
+    // Initialize sorted array of size 9 with nulls
+    const sortedImages = new Array(9).fill(null)
     const extras = []
     
     // Sort images based on filename prefix numbers
@@ -30,10 +29,10 @@ function App() {
         
         if (numberMatch) {
           const slotNumber = parseInt(numberMatch[1], 10)
-          const slotIndex = slotNumber - 1 // Convert to 0-based index
+          const slotIndex = slotNumber // Direct mapping since files start with 0
           
           // Place in sorted array if index is valid
-          if (slotIndex >= 0 && slotIndex < 8) {
+          if (slotIndex >= 0 && slotIndex < 9) {
             sortedImages[slotIndex] = imageObj
           } else {
             extras.push(imageObj)
@@ -118,6 +117,26 @@ function App() {
     }
   }, [])
 
+  const getDisplayName = (filename) => {
+    if (!filename) return '...'
+    
+    try {
+      // Remove file extension
+      let nameWithoutExt = filename.replace(/\.[^/.]+$/, '')
+      // Decode URI to handle Hebrew characters
+      nameWithoutExt = decodeURIComponent(nameWithoutExt)
+      // Remove leading number and separator (underscore/hyphen/space)
+      // This ensures "1_Grandma" becomes "Grandma"
+      nameWithoutExt = nameWithoutExt.replace(/^[\d\s\-_]+/, '')
+      // Replace remaining underscores/hyphens with spaces
+      nameWithoutExt = nameWithoutExt.replace(/[-_]/g, ' ')
+      // Trim whitespace
+      return nameWithoutExt.trim() || '...'
+    } catch (e) {
+      return '...'
+    }
+  }
+
   return (
     <>
       <div className="mobile-warning">
@@ -133,7 +152,7 @@ function App() {
         </div>
       </div>
 
-      <div className="app">
+      <div className="app-container-wrapper"> 
         <button 
           className="fullscreen-toggle"
           onClick={toggleFullscreen}
@@ -142,33 +161,104 @@ function App() {
         >
           {isFullscreen ? '🔍' : '📺'}
         </button>
-      <Header />
-      <ImageGallery 
-        images={images}
-        onImageClick={handleImageClick}
-      />
-      <footer className="app-footer">
-        <small>
-          פיתוח: <a href="https://www.linkedin.com/in/chagai-yechiel/" target="_blank" rel="noopener noreferrer">חגי יחיאל</a>
-        </small>
-      </footer>
-      {/* Candles fixed to the sides */}
-      <img src={candleGif} alt="" className="corner-candle candle-left" />
-      <img src={candleGif} alt="" className="corner-candle candle-right" />
-      {isLightboxOpen && (
-        <Lightbox
-          images={loadImages()}
-          currentIndex={currentImageSlot !== null && images[currentImageSlot] 
-            ? loadImages().findIndex(img => img.src === images[currentImageSlot]?.src) 
-            : 0}
-          onSelect={handleImageSelect}
-          onClose={handleCloseLightbox}
-        />
-      )}
+        
+        <div className="container">
+            {/* Left Candle GIF */}
+            <div className="side-animation">
+                <img src={candleGif} alt="" className="corner-candle candle-left" />
+            </div>
+            
+            <div className="main-content">
+                {/* Grandparents Generation */}
+                <div className="generation grandparents">
+                    <div className="couple-group">
+                        <PersonBox 
+                          image={images[0]} 
+                          label={getDisplayName(images[0]?.filename)} 
+                          onClick={() => handleImageClick(0)}
+                        />
+                        <PersonBox 
+                          image={images[1]} 
+                          label={getDisplayName(images[1]?.filename)} 
+                          onClick={() => handleImageClick(1)}
+                        />
+                    </div>
+                    
+                    <div className="connector">בליבנו לעד!</div>
+                    
+                    <div className="couple-group">
+                        <PersonBox 
+                          image={images[2]} 
+                          label={getDisplayName(images[2]?.filename)} 
+                          onClick={() => handleImageClick(2)}
+                        />
+                        <PersonBox 
+                          image={images[3]} 
+                          label={getDisplayName(images[3]?.filename)} 
+                          onClick={() => handleImageClick(3)}
+                        />
+                    </div>
+                </div>
+                
+                {/* Parents Generation */}
+                <div className="generation parents">
+                    <div className="couple-group">
+                        <PersonBox 
+                          image={images[4]} 
+                          label={getDisplayName(images[4]?.filename)} 
+                          onClick={() => handleImageClick(4)}
+                        />
+                        <PersonBox 
+                          image={images[5]} 
+                          label={getDisplayName(images[5]?.filename)} 
+                          onClick={() => handleImageClick(5)}
+                        />
+                    </div>
+                </div>
+                
+                {/* Children Generation */}
+                <div className="generation children">
+                    <PersonBox 
+                      image={images[6]} 
+                      label={getDisplayName(images[6]?.filename)} 
+                      onClick={() => handleImageClick(6)}
+                    />
+                    <PersonBox 
+                      image={images[7]} 
+                      label={getDisplayName(images[7]?.filename)} 
+                      onClick={() => handleImageClick(7)}
+                    />
+                    <PersonBox 
+                      image={images[8]} 
+                      label={getDisplayName(images[8]?.filename)} 
+                      onClick={() => handleImageClick(8)}
+                    />
+                </div>
+            </div>
+            
+            {/* Right Candle GIF */}
+            <div className="side-animation">
+                <img src={candleGif} alt="" className="corner-candle candle-right" />
+            </div>
+        </div>
+        
+        <div className="dev-credit">
+          <a href="https://www.linkedin.com/in/chagai-yechiel/" target="_blank" rel="noopener noreferrer">מפתח: חגי יחיאל</a>
+        </div>
+
+        {isLightboxOpen && (
+          <Lightbox
+            images={loadImages()}
+            currentIndex={currentImageSlot !== null && images[currentImageSlot] 
+              ? loadImages().findIndex(img => img.src === images[currentImageSlot]?.src) 
+              : 0}
+            onSelect={handleImageSelect}
+            onClose={handleCloseLightbox}
+          />
+        )}
       </div>
     </>
   )
 }
 
 export default App
-

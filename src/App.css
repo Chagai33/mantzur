@@ -1,3 +1,239 @@
+/* Reset & Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Assistant', Arial, sans-serif;
+  background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  color: #333;
+}
+
+/* Layout Container */
+.container {
+  flex: 1;
+  display: flex;
+  padding: 1vh;
+  gap: 1.5vh;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* Side Animation Wrapper */
+.side-animation {
+  width: 8vw;
+  display: flex;
+  align-items: center; /* Center vertically */
+  justify-content: center;
+  position: relative; /* For absolute positioning of children if needed */
+}
+
+/* Corner Candles (GIF) Styles */
+.corner-candle {
+  height: auto;
+  width: 100%;
+  max-width: 15vh; /* Limit width based on height */
+  min-width: 5vh;
+  object-fit: contain;
+  opacity: 0.8;
+  mix-blend-mode: screen; /* Blend with background */
+  
+  /* Optional: Crop bottom watermark if present */
+  clip-path: inset(0 0 2.5vh 0); 
+}
+
+/* Specific positioning not needed if inside .side-animation flex container, 
+   but we can keep specific transforms if required for the GIF orientation */
+
+.candle-left {
+  /* Default orientation */
+}
+
+.candle-right {
+  /* Flip horizontally for symmetry */
+  transform: scaleX(-1);
+}
+
+/* Removed CSS Candle Styles (.candle, .flame, .candle-text, @keyframes flicker) */
+
+/* Main Content Area */
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1vh;
+  justify-content: center; /* Changed from space-evenly to allow relative positioning */
+  padding: 0.5vh 0;
+  height: 100%;
+}
+
+/* Generation Rows */
+.generation {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2vw;
+  position: relative;
+}
+
+.couple-group {
+  display: flex;
+  gap: 1.2vh;
+  padding: 1.2vh;
+  background: rgba(255,255,255,0.08);
+  border-radius: 1.2vh;
+  border: 0.2vh solid rgba(212, 175, 55, 0.4);
+  box-shadow: 0 0.4vh 1vh rgba(0,0,0,0.2);
+}
+
+/* Person Box Component Styles */
+.person-box {
+  background: white;
+  border: 0.3vh solid #d4af37;
+  border-radius: 1vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0.6vh 1.2vh rgba(0,0,0,0.3);
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.person-box:hover {
+  transform: scale(1.02);
+}
+
+.person-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.person-box.placeholder {
+  background: #f0f0f0;
+}
+
+/* Arrows removed */
+
+/* Label */
+.label {
+  position: absolute;
+  bottom: 0.5vh;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 1.8vh; /* Scale font size */
+  font-weight: bold;
+  color: white;
+  background: rgba(0,0,0,0.7);
+  padding: 0.3vh 0.8vh;
+  border-radius: 0.4vh;
+  text-align: center;
+  white-space: nowrap;
+  z-index: 3;
+  max-width: 90%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Floating Title (Connector) */
+.connector {
+  font-size: 7vh; 
+  color: #d4af37; /* Matches person-box border color */
+  font-weight: bold;
+  text-shadow: 0 0.4vh 0.8vh rgba(0,0,0,0.5), 0 0 2vh rgba(212, 175, 55, 0.5); /* Enhanced shadow */
+  animation: floatTitle 3s ease-in-out infinite;
+  font-family: 'Assistant', sans-serif;
+  letter-spacing: 0.2vh;
+  
+  /* Positioning: Absolute to place it freely */
+  position: absolute;
+  top: 40%; /* Lowered from 35% */
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 5; /* Ensure it's above other elements if they overlap */
+  width: 100%;
+  text-align: center;
+}
+
+@keyframes floatTitle {
+  0%, 100% { transform: translate(-50%, -50%) translateY(0); }
+  50% { transform: translate(-50%, -50%) translateY(-1vh); }
+}
+
+/* Generation Specific Sizes */
+.grandparents {
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: -4vh; /* Reduced overlap significantly from -15vh */
+  z-index: 1;
+}
+
+/* Increased size for grandparents - enlarged towards center */
+.grandparents .person-box {
+  width: 22vh;
+  height: 29.3vh; /* Reduced from 24vh/32vh */
+}
+
+.grandparents .couple-group {
+  margin-top: 4vh; 
+}
+
+.parents {
+  justify-content: center;
+  margin-top: 0; 
+  z-index: 2;
+  margin-bottom: -1vh; /* Reduced overlap from -5vh */
+}
+
+.parents .person-box {
+  width: 20vh;
+  height: 27vh;
+}
+
+.children {
+  justify-content: center;
+  gap: 3vh;
+  margin-top: 1vh; /* Reduced from 2vh */
+  z-index: 3;
+}
+
+.children .person-box {
+  width: 20vh;
+  height: 27vh;
+}
+
+/* Developer Credit */
+.dev-credit {
+  position: fixed;
+  bottom: 5px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  opacity: 0.5;
+  transition: opacity 0.3s ease;
+}
+
+.dev-credit:hover {
+  opacity: 1;
+}
+
+.dev-credit a {
+  color: #d4af37; /* Gold */
+  text-decoration: none;
+  font-size: 10px;
+  letter-spacing: 1px;
+}
+
 /* Fullscreen toggle button */
 .fullscreen-toggle {
   position: fixed;
@@ -5,7 +241,7 @@
   left: 20px;
   z-index: 1000;
   background: rgba(10, 31, 61, 0.9);
-  border: 2px solid var(--color-gold-metallic);
+  border: 2px solid #ffd700;
   border-radius: 50%;
   width: 50px;
   height: 50px;
@@ -15,15 +251,16 @@
   align-items: center;
   justify-content: center;
   transition: all 0.3s ease;
-  box-shadow: var(--shadow-metallic), var(--shadow-soft);
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
   backdrop-filter: blur(10px);
+  color: #ffd700;
 }
 
 .fullscreen-toggle:hover {
   background: rgba(10, 31, 61, 1);
   transform: scale(1.1);
-  box-shadow: var(--shadow-metallic), 0 15px 40px -5px rgba(0, 0, 0, 0.5);
-  border-color: var(--color-gold-light);
+  box-shadow: 0 15px 40px -5px rgba(0, 0, 0, 0.5);
+  border-color: #fff;
 }
 
 .fullscreen-toggle:active {
@@ -40,68 +277,6 @@
   }
 }
 
-/* Footer styles */
-.app-footer {
-  width: 100%;
-  text-align: center;
-  padding: 2px 0; /* Minimal padding */
-  background: rgba(0, 0, 0, 0.2);
-  color: rgba(248, 234, 205, 0.6); /* Faded color */
-  font-size: 0.75rem; /* Small text */
-  flex-shrink: 0; /* Prevent it from disappearing */
-  z-index: 10;
-}
-
-.app-footer a {
-  color: inherit;
-  text-decoration: none;
-}
-
-.app-footer a:hover {
-  text-decoration: underline;
-  color: #fff;
-}
-
-/* Corner Candles */
-.corner-candle {
-  position: fixed;
-  /* Center vertically */
-  top: 50%;
-  bottom: auto; /* Reset bottom */
-  
-  /* Height adjustment - keep it large enough */
-  height: 40vh; 
-  width: auto;
-  
-  z-index: 1;
-  pointer-events: none;
-  opacity: 0.8;
-  mix-blend-mode: screen;
-  
-  /* CRITICAL: This crops the bottom 25px to hide the watermark text */
-  clip-path: inset(0 0 25px 0); 
-}
-
-/* Update positioning for specific sides */
-.candle-left {
-  left: -1vw; /* Adjust slightly if needed */
-  /* Center vertically */
-  transform: translateY(-50%);
-}
-
-.candle-right {
-  right: -1vw;
-  /* Center vertically AND flip horizontally */
-  transform: translateY(-50%) scaleX(-1);
-}
-
-/* Responsive: Hide on smaller screens */
-@media (max-width: 1400px) {
-  .corner-candle {
-    display: none;
-  }
-}
-
 /* Mobile Warning Styles */
 .mobile-warning {
   display: none; /* Hidden by default on Desktop */
@@ -110,7 +285,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(to bottom, var(--color-primary-blue), var(--color-secondary-blue));
+  background: linear-gradient(to bottom, #1e3c72, #2a5298);
   z-index: 9999;
   flex-direction: column;
   align-items: center;
@@ -120,22 +295,22 @@
 }
 
 .mobile-warning-content {
-  border: 2px solid var(--color-gold-metallic);
+  border: 2px solid #d4af37;
   padding: 2rem;
   border-radius: 15px;
   background: rgba(10, 31, 61, 0.9);
-  box-shadow: var(--shadow-metallic);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
 }
 
 .mobile-warning h1 {
   font-family: 'Assistant', sans-serif;
-  color: var(--color-gold-metallic);
+  color: #d4af37;
   margin-bottom: 1rem;
 }
 
 .mobile-warning p {
   font-family: 'Assistant', sans-serif;
-  color: var(--color-text-light);
+  color: #fff;
   font-size: 1.2rem;
 }
 
@@ -161,24 +336,21 @@
 
 .mobile-warning-footer a:hover {
   text-decoration: underline;
-  color: var(--color-gold-light);
+  color: #ffd700;
 }
 
 /* MEDIA QUERY: If screen width is less than 1024px (Tablets/Mobile) */
 @media (max-width: 1024px) {
-  /* Show the warning */
   .mobile-warning {
     display: flex !important;
   }
 
-  /* Hide the actual app to prevent broken layout */
-  .app {
-    display: none !important;
-  }
-  
-  /* Also hide any floating candles if they are outside .app */
-  .corner-candle {
+  .app-container-wrapper {
     display: none !important;
   }
 }
 
+/* Utility class to hide cursor in fullscreen */
+body.is-fullscreen {
+  cursor: none;
+}
