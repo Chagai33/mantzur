@@ -130,6 +130,26 @@ function App() {
       nameWithoutExt = nameWithoutExt.replace(/^[\d\s\-_]+/, '')
       // Replace remaining underscores/hyphens with spaces
       nameWithoutExt = nameWithoutExt.replace(/[-_]/g, ' ')
+      // Replace "זל" with "ז״ל"
+      nameWithoutExt = nameWithoutExt.replace(/\sזל$/g, ' ז״ל').replace(/^זל\s/g, 'ז״ל ')
+      
+      // Handle "Shoshana" specific case - put "Hamami" in parentheses
+      // Assuming name contains "שושנה" and "חממי"
+      if (nameWithoutExt.includes('שושנה') && nameWithoutExt.includes('מנצור')) {
+         // This assumes the structure is roughly "שושנה מנצור" or similar
+         // We'll append "(חממי)" if it's not already there, or format it
+         // But the user asked specifically to display "חממי" in parentheses.
+         // Let's replace "חממי" with "(חממי)" if it exists
+         /* 
+           However, based on the file list, the file name is "5_שושנה מנצור.JPG".
+           "חממי" is NOT in the file name currently.
+           So we need to ADD it.
+         */
+         if (!nameWithoutExt.includes('חממי')) {
+             nameWithoutExt = nameWithoutExt.replace('מנצור', 'מנצור (חממי)');
+         }
+      }
+
       // Trim whitespace
       return nameWithoutExt.trim() || '...'
     } catch (e) {

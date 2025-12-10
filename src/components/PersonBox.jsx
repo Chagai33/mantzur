@@ -1,9 +1,10 @@
 import React from 'react'
 
-function PersonBox({ image, label, onClick }) {
+function PersonBox({ image, label, onClick, className, id }) {
   return (
     <div 
-      className={`person-box ${!image ? 'placeholder' : ''}`} 
+      id={id}
+      className={`person-box ${!image ? 'placeholder' : ''} ${className || ''}`} 
       onClick={onClick}
     >
       
